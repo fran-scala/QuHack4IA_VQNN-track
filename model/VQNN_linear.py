@@ -148,7 +148,7 @@ def optimizer_update(opt_state, params, x, y, ):
     return params, opt_state, loss
 
 
-df_with_outliers = pd.read_csv('../dataset/dataset_with_outliers_without_feature.csv')
+df_with_outliers = pd.read_csv('/g100/home/usertrain/a08tra20/QuHack4IA_VQNN-track/dataset/dataset_with_outliers_without_feature.csv')
 
 X = df_with_outliers.drop(columns=["concrete_compressive_strength"]).values
 y = df_with_outliers["concrete_compressive_strength"].values
