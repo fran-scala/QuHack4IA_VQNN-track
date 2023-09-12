@@ -13,6 +13,7 @@ n_qubits = 7  # equal to the number of features
 layers = 3
 sublayers = 1
 params_per_sublayer = 3 * n_qubits
+seed = 1234
 device = qml.device("default.qubit.jax", wires=n_qubits)
 
 
@@ -30,17 +31,17 @@ def encode_data_nonlinear(x):
 
 
 
-def basic_ansatz(thetas,):
-    '''
-    thetas - Parameters of the QNN
+# def basic_ansatz(thetas,):
+#     '''
+#     thetas - Parameters of the QNN
 
-    Applies the Anstaz to the circuit. 
-    The ansatz is composed by a repition of sublayers.
-    '''
-    k = 0
-    for lay in range(sublayers):
-        qml.RandomLayers(thetas[k:params_per_sublayer + k], wires=range(n_qubits))
-        k += params_per_sublayer
+#     Applies the Anstaz to the circuit. 
+#     The ansatz is composed by a repition of sublayers.
+#     '''
+#     k = 0
+#     for lay in range(sublayers):
+#         qml.RandomLayers(thetas[k], wires=range(n_qubits), seed=seed+k)
+#         k += 1
 
 
 @jax.jit
@@ -76,7 +77,7 @@ def optimizer_update(opt_state, params, x, y, optimizer, qnn):
 
 
 @qml.qnode(device,interface='jax')
-def circuit_nonlinear(x, thetas):
+def circuit_random(x, thetas):
     '''
     x - input features
     thetas - Parameters of thn QNN
@@ -88,13 +89,23 @@ def circuit_nonlinear(x, thetas):
     for lay in range(layers):
         encode_data_nonlinear(x,)
         qml.Barrier(wires=range(n_qubits),only_visual=True)
-        basic_ansatz(thetas[j:j+(params_per_sublayer)*sublayers],)
-        j += (params_per_sublayer)*sublayers
+        
+        qml.RandomLayers(thetas[j], wires=range(n_qubits), seed=seed+j)
+        j += 1
         qml.Barrier(wires=range(n_qubits),only_visual=True)
     qml.Barrier(wires=range(n_qubits),only_visual=True)
 
     return qml.expval(qml.PauliZ(0))
 
+# import matplotlib.pyplot as plt
+# layers = 3
+# sublayers = 1
+# params_per_sublayer = n_qubits
+# key = jax.random.PRNGKey(seed)
+# initial_params = jax.random.normal(key, shape=(layers ,sublayers,params_per_sublayer))
+# print(initial_params)
+# qml.draw_mpl(circuit_random,expansion_strategy='device')([1,0,1,1,1,1,0,0],initial_params,)
+# plt.savefig('./random_circuit.pdf')
 
 @jax.jit
 def calculate_mse_cost(X, y, theta):
@@ -127,7 +138,6 @@ def optimizer_update(opt_state, params, x, y, ):
     params = optax.apply_updates(params, updates)
     return params, opt_state, loss
 
-
 df_with_outliers = pd.read_csv('/g100/home/usertrain/a08tra32/QuHack4IA_VQNN-track/dataset/dataset_without_outliers_without_feature.csv')
 
 X = df_with_outliers.drop(columns=["concrete_compressive_strength"]).values
@@ -156,12 +166,12 @@ for layers in range(min_layers, max_layers + 1):
 
         # creating a folder to save data
         dir_path = '.'
-        data = dir_path+f'/results/nonlinear/{layers}l-{sublayers}p'
+        data = dir_path+f'/results/random/{layers}l-{sublayers}p'
         os.makedirs(data, 0o755, exist_ok=True)
         # Jax jit and vmap speed up the computational times of the circuit
 
         params_per_sublayer = n_qubits
-        qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
+        qnn_batched = jax.vmap(circuit_random, (0, None,))
         qnn = jax.jit(qnn_batched)
 
         # Lists to save data
@@ -172,7 +182,7 @@ for layers in range(min_layers, max_layers + 1):
 
         # Creating the initial random parameters for the QNN
         key = jax.random.PRNGKey(seed)
-        initial_params = jax.random.normal(key, shape=((params_per_sublayer) * layers * sublayers,))
+        initial_params = jax.random.normal(key, shape=(layers * sublayers,1,params_per_sublayer))
         key = jax.random.split(key)[0]
         params = jnp.copy(initial_params)
 
