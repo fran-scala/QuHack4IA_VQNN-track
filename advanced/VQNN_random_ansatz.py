@@ -28,29 +28,6 @@ def encode_data_nonlinear(x):
         qml.RX(jnp.arctan(x[i])*2, wires=i)
         qml.RZ(x[i]**2*jnp.pi, wires=i)
 
-def basic_ansatz_layer(thetas):
-    '''
-    thetas - Parameters of the QNN
-
-    Creates the basic ansatz of the QNN. This is composed of a RX, RY and RZ rotation on each qubit,
-    followed by CNOTs gates on neighbouring qubits in linear chain.
-    '''
-    k = 0
-
-    for i in range(n_qubits):
-        qml.RX(thetas[i], wires=i)
-    k += n_qubits
-
-    for i in range(n_qubits):
-        qml.RY(thetas[i + k], wires=i)
-    k += n_qubits
-
-    for i in range(n_qubits):
-        qml.RZ(thetas[i + k], wires=i)
-    k += n_qubits
-
-    for i in range(0, n_qubits - 1):
-        qml.CNOT(wires=[i, i + 1])  #
 
 
 def basic_ansatz(thetas,):
@@ -62,7 +39,7 @@ def basic_ansatz(thetas,):
     '''
     k = 0
     for lay in range(sublayers):
-        basic_ansatz_layer(thetas[k:params_per_sublayer + k])
+        qml.RandomLayers(thetas[k:params_per_sublayer + k], wires=range(n_qubits))
         k += params_per_sublayer
 
 
@@ -183,7 +160,7 @@ for layers in range(min_layers, max_layers + 1):
         os.makedirs(data, 0o755, exist_ok=True)
         # Jax jit and vmap speed up the computational times of the circuit
 
-        params_per_sublayer = 3 * n_qubits
+        params_per_sublayer = n_qubits
         qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
         qnn = jax.jit(qnn_batched)
 

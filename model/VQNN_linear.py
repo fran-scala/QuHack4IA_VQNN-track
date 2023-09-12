@@ -56,7 +56,8 @@ def basic_ansatz(thetas,):
     '''
     thetas - Parameters of the QNN
 
-    Applies the Anstaz to the circuit. A sublayer is composed by a repition of the ansatz.
+    Applies the Anstaz to the circuit. 
+    The ansatz is composed by a repition of sublayers.
     '''
     k = 0
     for lay in range(sublayers):
