@@ -165,7 +165,7 @@ print(X_train.shape, X_valid.shape, X_test.shape)
 
 # Parameter initialization
 # n_runs = 1
-epochs = 100
+epochs = 60
 batch_size = 30
 seed = 1234
 min_layers, max_layers = 1, 4
@@ -200,7 +200,7 @@ for layers in range(min_layers, max_layers + 1):
         optimizer = optax.adam(learning_rate=0.01)
         opt_state = optimizer.init(initial_params)
 
-        for epoch in range(epochs):
+        for epoch in range(1,epochs+1):
             # Generation of random indices to be used for batch
             idxs_dataset = jax.random.choice(key, jnp.array(list(range(X_train.shape[0]))), shape=(X_train.shape[0],),
                                              replace=False)
@@ -224,6 +224,7 @@ for layers in range(min_layers, max_layers + 1):
 
             print(f"layers:{layers}, p:{sublayers}, epoch {epoch}/{epochs}", '--- Train cost:', cost, '--- Val cost:',
                   val_cost, end='\r')
+        print()
 
         np.save(data + '/train_cost.npy', list(costs))
         np.save(data + '/val_cost.npy', list(val_costs))
