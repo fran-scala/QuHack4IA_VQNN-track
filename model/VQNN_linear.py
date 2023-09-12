@@ -148,7 +148,7 @@ def optimizer_update(opt_state, params, x, y, ):
     return params, opt_state, loss
 
 
-df_with_outliers = pd.read_csv('../dataset/dataset_with_outliers_without_feature.csv')
+df_with_outliers = pd.read_csv('/g100/home/usertrain/a08tra20/QuHack4IA_VQNN-track/dataset/dataset_with_outliers_without_feature.csv')
 
 X = df_with_outliers.drop(columns=["concrete_compressive_strength"]).values
 y = df_with_outliers["concrete_compressive_strength"].values
@@ -165,7 +165,7 @@ print(X_train.shape, X_valid.shape, X_test.shape)
 
 # Parameter initialization
 # n_runs = 1
-epochs = 100
+epochs = 60
 batch_size = 30
 seed = 1234
 min_layers, max_layers = 1, 4
@@ -175,7 +175,7 @@ for layers in range(min_layers, max_layers + 1):
     for sublayers in range(min_sublayers, max_sublayers + 1):
 
         # creating a folder to save data
-        dir_path = '..'
+        dir_path = '.'
         data = dir_path + f'/results/linear/{layers}l-{sublayers}p'
         os.makedirs(data, 0o755, exist_ok=True)
         # Jax jit and vmap speed up the computational times of the circuit
@@ -200,7 +200,7 @@ for layers in range(min_layers, max_layers + 1):
         optimizer = optax.adam(learning_rate=0.01)
         opt_state = optimizer.init(initial_params)
 
-        for epoch in range(epochs):
+        for epoch in range(1,epochs+1):
             # Generation of random indices to be used for batch
             idxs_dataset = jax.random.choice(key, jnp.array(list(range(X_train.shape[0]))), shape=(X_train.shape[0],),
                                              replace=False)
