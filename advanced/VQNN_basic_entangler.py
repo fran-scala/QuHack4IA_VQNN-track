@@ -152,7 +152,7 @@ for layers in range(min_layers, max_layers + 1):
 
         # creating a folder to save data
         dir_path = '.'
-        data = dir_path+f'/results/nonlinear/{layers}l-{sublayers}p'
+        data = dir_path+f'/results/basic_entangler/{layers}l-{sublayers}p'
         os.makedirs(data, 0o755, exist_ok=True)
         # Jax jit and vmap speed up the computational times of the circuit
 
