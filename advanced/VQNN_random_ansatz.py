@@ -30,20 +30,6 @@ def encode_data_nonlinear(x):
         qml.RZ(x[i]**2*jnp.pi, wires=i)
 
 
-
-# def basic_ansatz(thetas,):
-#     '''
-#     thetas - Parameters of the QNN
-
-#     Applies the Anstaz to the circuit. 
-#     The ansatz is composed by a repition of sublayers.
-#     '''
-#     k = 0
-#     for lay in range(sublayers):
-#         qml.RandomLayers(thetas[k], wires=range(n_qubits), seed=seed+k)
-#         k += 1
-
-
 @jax.jit
 def calculate_mse_cost(X, y, theta, qnn):
     '''
