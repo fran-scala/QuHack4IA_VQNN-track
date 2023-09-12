@@ -175,7 +175,7 @@ for layers in range(min_layers, max_layers + 1):
     for sublayers in range(min_sublayers, max_sublayers + 1):
 
         # creating a folder to save data
-        dir_path = '..'
+        dir_path = '.'
         data = dir_path + f'/results/linear/{layers}l-{sublayers}p'
         os.makedirs(data, 0o755, exist_ok=True)
         # Jax jit and vmap speed up the computational times of the circuit
@@ -224,7 +224,6 @@ for layers in range(min_layers, max_layers + 1):
 
             print(f"layers:{layers}, p:{sublayers}, epoch {epoch}/{epochs}", '--- Train cost:', cost, '--- Val cost:',
                   val_cost, end='\r')
-        print()
 
         np.save(data + '/train_cost.npy', list(costs))
         np.save(data + '/val_cost.npy', list(val_costs))
