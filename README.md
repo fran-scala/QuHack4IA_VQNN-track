@@ -9,6 +9,26 @@ Here we train multiple VQNNs to learn how different features determine the concr
 In addition developed a demo of ***COMPRESS BOT*** a chatbot able to predict the concrete compressive strength from given ingredients.
 
 -------------------------
+
+## Table of content
+- [Cloning the repo](#cloning-the-repo)
+- [Requirements](#requirements)
+- [Execution](#execution)
+- [Device Comparison](#device-comparison)
+  - [Classical approach](#classical-approach)
+  - [Quantum approach](#quantum-approach)
+- [Directory Structure](#directory-structure)
+  - [Dataset](#dataset)
+  - [Advanced tasks](#advanced)
+  - [Data preprocessing](#data-preprocessing)
+  - [Model](#Model)
+  - [Demo](#Demo)
+  - [Plots](#Plots)
+  - [utils](#utils)
+- [Contacts](#contacts)
+
+------------------
+
 ## Cloning the repo
 To cloning the repo through HTTPS or SSH, you must have installed Git on your operating system.<br>
 Then you can open a new terminal and type the following command (this is the cloning throgh HTTPS):
@@ -42,7 +62,7 @@ So you can execute the command `python ./demo/demo.py` to run the demo.
 
 To run the training of the model, you can run:
 - `python ./model/VQNN_linear.py`: it execute the model by using the Angle Encoding with the rotation angle computed as 
-  $\pix$
+  $\pi$$x$
 - `python ./model/VQNN_nonlinear.py`: it execute the model by using the Angle Encoding with the rotation angle computed as
   $2arctan(x)$
 
@@ -72,9 +92,9 @@ We compute the Mean Square Error (MSE) for both the below approaches.
 
 - [dataset](#dataset): Contains dataset files in various formats.
 - [advanced](#advanced): Contains VQNN implementations for the advanced task.
-- [datapreprocessing](#datapreprocessing): Contains data preprocessing code and notes.
+- [datapreprocessing](#data-preprocessing): Contains data preprocessing code and notes.
 - [model](#model): Contains VQNN model implementations.
-- [model_selection](#model_selection): Hyperparameter tuning files.
+- [model_selection](#model-selection): Hyperparameter tuning files.
 - [prediction](#prediction): Classical predictions.
 - [demo](#demo): demo of COMPRESS BOT.
 - [plots](#plots): Contains various plots and visualizations.
@@ -88,7 +108,7 @@ Contains dataset files in various formats.
 - `dataset_without_outliers.csv`: Dataset file without outliers.
 - `dataset_without_outliers_without_feature.csv`: Dataset file without outliers and a specific feature.
 
-### Advanced task
+### Advanced
 Contains advanced VQNN implementations.
 
 - `VQNN_basic_entangler.py`: Implementation of a basic VQNN with an entangler circuit.
@@ -110,11 +130,13 @@ Contains VQNN model implementations.
 - `VQNN_nonlinear.ipynb`: Jupyter Notebook for nonlinear VQNN.
 - `VQNN_nonlinear.py`: Python script for nonlinear VQNN.
 
+### Model Selection
+Contains VQNN hyperaparameter tuning and the best model.
+
 ### Demo
 
 - `banner.txt`: Banner image in ASCII.
 - `demo.py`: A demo of COMPRESS BOT a chatbot able to predict the concrete compressive strength from given ingredients.
-
 
 ### Plots
 Contains various plots and visualizations.
