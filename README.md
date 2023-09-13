@@ -51,10 +51,7 @@ We compute the Mean Square Error (MSE) and the Adjusted-R^2 (Adj-R2) as an accur
 #### Classical approach
 - Normalized dataset:
   - MSE: 0.018633318309299648
-  - Adj-R2: 0.8856312515340603 
-- Normalized dataset without outliers:
-  - MSE: 0.015269465774461023
-  - Adj-R2: 0.9071801646839951
+  - Adj-R2: 0.8856312515340603
 - Normalized dataset with features reduction:
   - MSE: 0.01824797554399269
   - Adj-R2: 0.8884444467700594
@@ -62,8 +59,15 @@ We compute the Mean Square Error (MSE) and the Adjusted-R^2 (Adj-R2) as an accur
   - MSE: 0.015918447676270243
   - Adj-R2: 0.903665207748923
 #### Quantum approach
+- Normalized dataset:
+  - MSE: 0.071925834
+  - Adj-R2: 0.
 - Normalized dataset with features reduction:
+  - MSE: 0.042346686
+  - Adj-R2: 0.
 - Normalized dataset with features reduction and without outliers:
+  - MSE: 0.042103965
+  - Adj-R2: 0.
 ### plots
 Contains various plots and visualizations.
 
