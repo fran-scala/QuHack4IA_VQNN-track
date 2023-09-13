@@ -8,6 +8,48 @@ Here we train multiple VQNNs to learn how different features determine the concr
 
 In addition developed a demo of ***COMPRESS BOT*** a chatbot able to predict the concrete compressive strength from given ingredients.
 
+-------------------------
+## Cloning the repo
+To cloning the repo through HTTPS or SSH, you must have installed Git on your operating system.<br>
+Then you can open a new terminal and type the following command (this is the cloning throgh HTTPS):
+```bash
+    git clone https://github.com/fran-scala/QuHack4IA_VQNN-track.git
+```
+
+If you don't have installet Git, you can simply download the repository by pressing <i>"Download ZIP"</i>.
+
+## Requirements
+
+See `requirements.txt` for the Python library requirements for running the code in this repository.
+Once the repo is cloned, some python libraries are required to properly setup your (virtual) enviroment.
+
+
+They can be installed via pip:
+```bash
+    pip install -r requirements.txt
+```
+
+or via conda:
+```bash
+    conda create --name <env_name> --file requirements.txt
+```
+-----------------------
+## Execution
+
+The `/demo/demo.py` is a demostrator of our model: you can run it after train the model and produce the results
+(inside the results folder).<br>
+So you can execute the command `python ./demo/demo.py` to run the demo.
+
+To run the training of the model, you can run:
+- `python ./model/VQNN_linear.py`: it execute the model by using the Angle Encoding with the rotation angle computed as 
+  $\pix$
+- `python ./model/VQNN_nonlinear.py`: it execute the model by using the Angle Encoding with the rotation angle computed as
+  $2arctan(x)$
+
+On the other hand, you can use the jupyter notebook present in the same folder.
+
+------------------------
+
 ## Device Comparison
 We compute the Mean Square Error (MSE) for both the below approaches.
 ### Classical approach
@@ -38,7 +80,7 @@ We compute the Mean Square Error (MSE) for both the below approaches.
 - [plots](#plots): Contains various plots and visualizations.
 - [utils](#utils): Contains utility code for plotting results.
 
-### dataset
+### Dataset
 Contains dataset files in various formats.
 
 - `concrete_data.csv`: Raw dataset file.
@@ -46,7 +88,7 @@ Contains dataset files in various formats.
 - `dataset_without_outliers.csv`: Dataset file without outliers.
 - `dataset_without_outliers_without_feature.csv`: Dataset file without outliers and a specific feature.
 
-### advanced
+### Advanced task
 Contains advanced VQNN implementations.
 
 - `VQNN_basic_entangler.py`: Implementation of a basic VQNN with an entangler circuit.
@@ -54,13 +96,13 @@ Contains advanced VQNN implementations.
 - `VQNN_random_ansatz.py`: Implementation of a VQNN with a random ansatz circuit.
 - `random_circuit.pdf`: PDF documentation for the random ansatz circuit.
 
-### datapreprocessing
+### Data preprocessing
 Contains data preprocessing code and notes.
 
 - `datapreprocessing.ipynb`: Jupyter Notebook for data preprocessing.
 - `notes.md`: Notes related to data preprocessing.
 
-### model
+### Model
 Contains VQNN model implementations.
 
 - `VQNN_linear.ipynb`: Jupyter Notebook for linear VQNN.
@@ -68,23 +110,28 @@ Contains VQNN model implementations.
 - `VQNN_nonlinear.ipynb`: Jupyter Notebook for nonlinear VQNN.
 - `VQNN_nonlinear.py`: Python script for nonlinear VQNN.
 
-### demo
+### Demo
 
 - `banner.txt`: Banner image in ASCII.
 - `demo.py`: A demo of COMPRESS BOT a chatbot able to predict the concrete compressive strength from given ingredients.
 
 
-### plots
+### Plots
 Contains various plots and visualizations.
+
 
 ### utils
 Contains utility code for plotting results.
 
 - `plot_results.ipynb`: Jupyter Notebook for plotting results.
 
-## Requirements
+-------------------------------------------------------------
 
-- See `requirements.txt` for the Python library requirements for running the code in this repository.
+## Contacts
 
-
-
+| Author                 | GitHub                                     | 
+|------------------------|--------------------------------------------|
+| **Lorenzo Bergadano**  | [lolloberga](https://github.com/lolloberga) |
+| **Alessandro Danesin** | [ale100gs](https://github.com/ale100gs)    |
+| **Giorgia Mazzaro**    |      |
+| **Francesco Scala**    | [fra-scala](https://github.com/fran-scala) |
