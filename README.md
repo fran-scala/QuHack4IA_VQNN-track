@@ -108,6 +108,8 @@ Contains dataset files in various formats.
 - `dataset_without_outliers.csv`: Dataset file without outliers.
 - `dataset_without_outliers_without_feature.csv`: Dataset file without outliers and a specific feature.
 
+The original dataset is public on Kaggle: https://www.kaggle.com/datasets/elikplim/concrete-compressive-strength-data-set
+
 ### Advanced
 Contains advanced VQNN implementations.
 
