@@ -1,6 +1,6 @@
 # QuHack4IA_VQNN-track Repository
 
-This repository contains code and data related to the QuHack4IA– Quantum Hackathon for Industrial Applications (12-13 September 2023), Variational Quantum Neural Network (VQNN) track project.
+This repository contains code and data related to the QuHack4IA– Quantum Hackathon for Industrial Applications (12-13 September 2023), Variational Quantum Neural Network (VQNN) track project. The team #4 members are: Lorenzo Bergadano,Alessandro Danesin, Giorgia Mazzaro, Francesco Scala.
 
 Concrete compressive strength is the measure of the ability to withstand axial loads without failing and is typically expressed in megapascals (MPa). Achieving the desired compressive strength is crucial in ensuring the structural integrity and safety of concrete-based structures.
 
