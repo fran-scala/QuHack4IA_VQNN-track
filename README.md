@@ -6,7 +6,7 @@ Concrete compressive strength is the measure of the ability to withstand axial l
 
 Here we train multiple VQNNs to learn how different features determine the concrete compressive strength. This is done by analysing a dataset of 1030 instances with 8 different features.
 
-In addition developed a demo of ***COMPRESS BOT*** a chatbot able to predict the concrete compressive strength from given ingredients.
+In addition, we developed a demo of ***COMPRESS BOT*** a chatbot able to predict the concrete compressive strength from given ingredients.
 
 -------------------------
 
@@ -30,18 +30,18 @@ In addition developed a demo of ***COMPRESS BOT*** a chatbot able to predict the
 ------------------
 
 ## Cloning the repo
-To cloning the repo through HTTPS or SSH, you must have installed Git on your operating system.<br>
-Then you can open a new terminal and type the following command (this is the cloning throgh HTTPS):
+To clone the repo through HTTPS or SSH, you must have installed Git on your operating system.<br>
+Then you can open a new terminal and type the following command (this is the cloning through HTTPS):
 ```bash
     git clone https://github.com/fran-scala/QuHack4IA_VQNN-track.git
 ```
 
-If you don't have installet Git, you can simply download the repository by pressing <i>"Download ZIP"</i>.
+If you don't have installed Git, you can simply download the repository by pressing <i>"Download ZIP"</i>.
 
 ## Requirements
 
 See `requirements.txt` for the Python library requirements for running the code in this repository.
-Once the repo is cloned, some python libraries are required to properly setup your (virtual) enviroment.
+Once the repo is cloned, some Python libraries are required to properly set up your (virtual) environment.
 
 
 They can be installed via pip:
@@ -56,14 +56,14 @@ or via conda:
 -----------------------
 ## Execution
 
-The `/demo/demo.py` is a demostrator of our model: you can run it after train the model and produce the results
+The `/demo/demo.py` is a demonstrator of our model: you can run it after training the model and produce the results
 (inside the results folder).<br>
 So you can execute the command `python ./demo/demo.py` to run the demo.
 
 To run the training of the model, you can run:
-- `python ./model/VQNN_linear.py`: it execute the model by using the Angle Encoding with the rotation angle computed as 
+- `python ./model/VQNN_linear.py`: it executes the model by using the Angle Encoding with the rotation angle computed as 
   $\pi$$x$
-- `python ./model/VQNN_nonlinear.py`: it execute the model by using the Angle Encoding with the rotation angle computed as
+- `python ./model/VQNN_nonlinear.py`: it executes the model by using the Angle Encoding with the rotation angle computed as
   $2arctan(x)$
 
 On the other hand, you can use the jupyter notebook present in the same folder.
@@ -133,7 +133,7 @@ Contains VQNN model implementations.
 - `VQNN_nonlinear.py`: Python script for nonlinear VQNN.
 
 ### Model Selection
-Contains VQNN hyperaparameter tuning and the best model.
+Contains VQNN hyperaparameters tuning and the best model.
 
 ### Demo
 
@@ -158,4 +158,4 @@ Contains utility code for plotting results.
 | **Lorenzo Bergadano**  | [lolloberga](https://github.com/lolloberga) |
 | **Alessandro Danesin** | [ale100gs](https://github.com/ale100gs)    |
 | **Giorgia Mazzaro**    |      |
-| **Francesco Scala**    | [fra-scala](https://github.com/fran-scala) |
+| **Francesco Scala**    | [fran-scala](https://github.com/fran-scala) |
