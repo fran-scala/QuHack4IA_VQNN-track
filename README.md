@@ -50,14 +50,14 @@ Contains VQNN model implementations.
 We compute the Mean Square Error (MSE) and the Adjusted-R^2 (Adj-R2) as an accuracy metrics for both the below approaches.
 #### Classical approach
 - Normalized dataset:
-  - MSE: 0.018633318309299648
-  - Adj-R2: 0.8856312515340603
+  - MSE: 0.015192617326421085
+  - Adj-R2: 0.9014066403505829
 - Normalized dataset with features reduction:
-  - MSE: 0.01824797554399269
-  - Adj-R2: 0.8884444467700594
+  - MSE: 0.015166064297178225
+  - Adj-R2: 0.9019726419225333
 - Normalized dataset with features reduction and without outliers:
-  - MSE: 0.015918447676270243
-  - Adj-R2: 0.903665207748923
+  - MSE: 0.016736906602992447
+  - Adj-R2: 0.8885174054148526
 #### Quantum approach
 - Normalized dataset:
   - MSE: 0.071925834
@@ -68,6 +68,7 @@ We compute the Mean Square Error (MSE) and the Adjusted-R^2 (Adj-R2) as an accur
 - Normalized dataset with features reduction and without outliers:
   - MSE: 0.042103965
   - Adj-R2: 0.
+
 ### plots
 Contains various plots and visualizations.
 
