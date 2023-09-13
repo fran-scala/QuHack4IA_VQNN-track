@@ -47,27 +47,21 @@ Contains VQNN model implementations.
 - `VQNN_nonlinear.py`: Python script for nonlinear VQNN.
 
 ### Device Comparison
-We compute the Mean Square Error (MSE) and the Adjusted-R^2 (Adj-R2) as an accuracy metrics for both the below approaches.
+We compute the Mean Square Error (MSE) for both the below approaches.
 #### Classical approach
 - Normalized dataset:
   - MSE: 0.014592172783657214
-  - Adj-R2: 0.898240619251174
 - Normalized dataset with features reduction:
   - MSE: 0.014217871731188965
-  - Adj-R2: 0.9013515831836628
 - Normalized dataset with features reduction and without outliers:
   - MSE: 0.014926592236208975
-  - Adj-R2: 0.8985489219626223
 #### Quantum approach
 - Normalized dataset:
-  - MSE: 0.071925834
-  - Adj-R2: 0.
+  - MSE: 0.10057372
 - Normalized dataset with features reduction:
-  - MSE: 0.042346686
-  - Adj-R2: 0.
+  - MSE: 0.039087
 - Normalized dataset with features reduction and without outliers:
-  - MSE: 0.042103965
-  - Adj-R2: 0.
+  - MSE: 0.043391567
 
 ### plots
 Contains various plots and visualizations.
