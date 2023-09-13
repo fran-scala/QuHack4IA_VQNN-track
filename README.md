@@ -33,8 +33,8 @@ We compute the Mean Square Error (MSE) for both the below approaches.
 - [datapreprocessing](#datapreprocessing): Contains data preprocessing code and notes.
 - [model](#model): Contains VQNN model implementations.
 - [model_selection](#model_selection): Hyperparameter tuning files.
-- [prediction](#prediction):
-- [demo](#demo):
+- [prediction](#prediction): Classical predictions.
+- [demo](#demo): demo of COMPRESS BOT.
 - [plots](#plots): Contains various plots and visualizations.
 - [utils](#utils): Contains utility code for plotting results.
 
