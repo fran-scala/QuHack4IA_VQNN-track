@@ -239,29 +239,56 @@ print(X_train.shape, X_valid.shape, X_test.shape)
 ############
 
 
+# params_per_sublayer = 3*n_qubits 
+
+# min_layers, max_layers = 1,4
+# min_sublayers, max_sublayers = 1,4
+# d_mse = {}
+# print('NON-LINEAR')
+# for layers in range(min_layers, max_layers+1):
+#     for sublayers in range(min_sublayers, max_sublayers+1):
+#         # re-create the circuit
+#         qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
+#         qnn = jax.jit(qnn_batched)
+
+#         # load optimal parameters
+#         dir_path = './QuHack4IA_VQNN-track/'
+#         data = dir_path+f'/results/nonlinear_no_outliers/{layers}l-{sublayers}p' 
+#         opt_params = np.load(data+'/opt_params.npy',)
+
+#         # predict on validation
+#         y = jnp.array(y_valid)
+#         yp = qnn(X_valid, opt_params) 
+#         mse_cost = jnp.mean((yp - y) ** 2)
+        
+#         print(layers, sublayers, mse_cost)
+#         d_mse[f'{layers}-{sublayers}'] = [mse_cost]
+
+# pd.DataFrame(d_mse).to_csv(dir_path+f'/results/nonlinear_no_outliers/val_mse_no_outliers.csv', )
+
+#############
+## TESTING ON THE BEST
+## L2S4 is the best with_outliers dataset
+#############
+
 params_per_sublayer = 3*n_qubits 
 
-min_layers, max_layers = 1,4
-min_sublayers, max_sublayers = 1,4
-d_mse = {}
-print('NON-LINEAR')
-for layers in range(min_layers, max_layers+1):
-    for sublayers in range(min_sublayers, max_sublayers+1):
-        # re-create the circuit
-        qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
-        qnn = jax.jit(qnn_batched)
+layers = 2
+sublayers = 4
 
-        # load optimal parameters
-        dir_path = './QuHack4IA_VQNN-track/'
-        data = dir_path+f'/results/nonlinear_no_outliers/{layers}l-{sublayers}p' 
-        opt_params = np.load(data+'/opt_params.npy',)
+# re-create the circuit
+qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
+qnn = jax.jit(qnn_batched)
 
-        # predict on validation
-        y = jnp.array(y_valid)
-        yp = qnn(X_valid, opt_params) 
-        mse_cost = jnp.mean((yp - y) ** 2)
-        
-        print(layers, sublayers, mse_cost)
-        d_mse[f'{layers}-{sublayers}'] = [mse_cost]
+# load optimal parameters
+dir_path = './QuHack4IA_VQNN-track/'
+data = dir_path+f'/results/nonlinear_no_outliers/{layers}l-{sublayers}p'
+opt_params = np.load(data+'/opt_params.npy',)
 
-pd.DataFrame(d_mse).to_csv(dir_path+f'/results/nonlinear_no_outliers/val_mse_no_outliers.csv', )
+# predict on validation
+y = jnp.array(y_test)
+yp = qnn(X_test, opt_params) 
+
+mse_cost = jnp.mean((yp - y) ** 2)
+
+print('BEST:', mse_cost)
