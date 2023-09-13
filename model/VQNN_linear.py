@@ -173,65 +173,65 @@ seed = 1234
 min_layers, max_layers = 1, 4
 min_sublayers, max_sublayers = 1, 4
 
-# for layers in range(min_layers, max_layers + 1):
-#     for sublayers in range(min_sublayers, max_sublayers + 1):
+for layers in range(min_layers, max_layers + 1):
+    for sublayers in range(min_sublayers, max_sublayers + 1):
 
-#         # creating a folder to save data
-#         dir_path = '.'
-#         data = dir_path + f'/results/linear/{layers}l-{sublayers}p'
-#         os.makedirs(data, 0o755, exist_ok=True)
-#         # Jax jit and vmap speed up the computational times of the circuit
+        # creating a folder to save data
+        dir_path = '.'
+        data = dir_path + f'/results/linear/{layers}l-{sublayers}p'
+        os.makedirs(data, 0o755, exist_ok=True)
+        # Jax jit and vmap speed up the computational times of the circuit
 
-#         params_per_sublayer = 3 * n_qubits
-#         qnn_batched = jax.vmap(circuit_linear, (0, None,))
-#         qnn = jax.jit(qnn_batched)
+        params_per_sublayer = 3 * n_qubits
+        qnn_batched = jax.vmap(circuit_linear, (0, None,))
+        qnn = jax.jit(qnn_batched)
 
-#         # Lists to save data
-#         costs = []
-#         val_costs = []
-#         train_per_epoch = []
-#         val_per_epoch = []
+        # Lists to save data
+        costs = []
+        val_costs = []
+        train_per_epoch = []
+        val_per_epoch = []
 
-#         # Creating the initial random parameters for the QNN
-#         key = jax.random.PRNGKey(seed)
-#         initial_params = jax.random.normal(key, shape=((params_per_sublayer) * layers * sublayers,))
-#         key = jax.random.split(key)[0]
-#         params = jnp.copy(initial_params)
+        # Creating the initial random parameters for the QNN
+        key = jax.random.PRNGKey(seed)
+        initial_params = jax.random.normal(key, shape=((params_per_sublayer) * layers * sublayers,))
+        key = jax.random.split(key)[0]
+        params = jnp.copy(initial_params)
 
-#         # Optimizer initialization
-#         optimizer = optax.adam(learning_rate=0.01)
-#         opt_state = optimizer.init(initial_params)
+        # Optimizer initialization
+        optimizer = optax.adam(learning_rate=0.01)
+        opt_state = optimizer.init(initial_params)
 
-#         for epoch in range(1,epochs+1):
-#             # Generation of random indices to be used for batch
-#             idxs_dataset = jax.random.choice(key, jnp.array(list(range(X_train.shape[0]))), shape=(X_train.shape[0],),
-#                                              replace=False)
-#             key = jax.random.split(key)[0]
-#             cost = 1
-#             val_cost = 1
-#             for i in gen_batches(X_train.shape[0], batch_size):
-#                 idxs = idxs_dataset[i]
+        for epoch in range(1,epochs+1):
+            # Generation of random indices to be used for batch
+            idxs_dataset = jax.random.choice(key, jnp.array(list(range(X_train.shape[0]))), shape=(X_train.shape[0],),
+                                             replace=False)
+            key = jax.random.split(key)[0]
+            cost = 1
+            val_cost = 1
+            for i in gen_batches(X_train.shape[0], batch_size):
+                idxs = idxs_dataset[i]
 
-#                 # Calculate cost function and update parameters accordingly
-#                 params, opt_state, _ = optimizer_update(opt_state, params, X_train[idxs, :], y_train[idxs])
+                # Calculate cost function and update parameters accordingly
+                params, opt_state, _ = optimizer_update(opt_state, params, X_train[idxs, :], y_train[idxs])
 
-#                 # Save MSE Costs and accuracies for both train and validation dataset
-#                 cost = calculate_mse_cost(X_train, y_train, params)  # calculate_mse_cost_and_accuracy
-#                 costs.append(cost)
+                # Save MSE Costs and accuracies for both train and validation dataset
+                cost = calculate_mse_cost(X_train, y_train, params)  # calculate_mse_cost_and_accuracy
+                costs.append(cost)
 
-#                 val_cost = calculate_mse_cost(X_valid, y_valid, params, )  # calculate_mse_cost_and_accuracy
-#                 val_costs.append(val_cost)
-#             train_per_epoch.append(cost)
-#             val_per_epoch.append(val_cost)
+                val_cost = calculate_mse_cost(X_valid, y_valid, params, )  # calculate_mse_cost_and_accuracy
+                val_costs.append(val_cost)
+            train_per_epoch.append(cost)
+            val_per_epoch.append(val_cost)
 
-#             print(f"layers:{layers}, p:{sublayers}, epoch {epoch}/{epochs}", '--- Train cost:', cost, '--- Val cost:',
-#                   val_cost, end='\r')
+            print(f"layers:{layers}, p:{sublayers}, epoch {epoch}/{epochs}", '--- Train cost:', cost, '--- Val cost:',
+                  val_cost, end='\r')
 
-#         np.save(data + '/train_cost.npy', list(costs))
-#         np.save(data + '/val_cost.npy', list(val_costs))
-#         np.save(data + '/train_cost_per_epoch.npy', list(train_per_epoch))
-#         np.save(data + '/val_cost_per_epoch.npy', list(val_per_epoch))
-#         np.save(data + '/opt_params.npy', list(params))
+        np.save(data + '/train_cost.npy', list(costs))
+        np.save(data + '/val_cost.npy', list(val_costs))
+        np.save(data + '/train_cost_per_epoch.npy', list(train_per_epoch))
+        np.save(data + '/val_cost_per_epoch.npy', list(val_per_epoch))
+        np.save(data + '/opt_params.npy', list(params))
 
 
 ##########

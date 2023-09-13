@@ -124,7 +124,8 @@ def optimizer_update(opt_state, params, x, y, ):
     params = optax.apply_updates(params, updates)
     return params, opt_state, loss
 
-df_with_outliers = pd.read_csv('/g100/home/usertrain/a08tra20/QuHack4IA_VQNN-track/dataset/dataset_with_outliers_without_feature.csv')
+# /g100/home/usertrain/a08tra20
+df_with_outliers = pd.read_csv('./QuHack4IA_VQNN-track/dataset/dataset_with_outliers_without_feature.csv')
 
 X = df_with_outliers.drop(columns=["concrete_compressive_strength"]).values
 y = df_with_outliers["concrete_compressive_strength"].values
@@ -206,3 +207,75 @@ for layers in range(min_layers, max_layers + 1):
         np.save(data + '/train_cost_per_epoch.npy', list(train_per_epoch))
         np.save(data + '/val_cost_per_epoch.npy', list(val_per_epoch))
         np.save(data + '/opt_params.npy', list(params))
+
+
+
+
+##########
+# PREDICTIONS
+############
+
+
+params_per_sublayer = 3*n_qubits 
+
+min_layers, max_layers = 1,4
+min_sublayers, max_sublayers = 1,4
+d_mse = {}
+print('RANDOM ANSATZ')
+for layers in range(min_layers, max_layers+1):
+    for sublayers in range(min_sublayers, max_sublayers+1):
+        # re-create the circuit
+        qnn_batched = jax.vmap(circuit_random, (0, None,))
+        qnn = jax.jit(qnn_batched)
+
+        # load optimal parameters
+        dir_path = './QuHack4IA_VQNN-track'
+        data = dir_path+f'/results/nonlinear_random_ans_with_outliers/{layers}l-{sublayers}p' 
+        opt_params = np.load(data+'/opt_params.npy',)
+
+        # predict on validation
+        y = jnp.array(y_valid)
+        yp = qnn(X_valid, opt_params) 
+        mse_cost = jnp.mean((yp - y) ** 2)
+        
+        print(layers, sublayers, mse_cost)
+        d_mse[(layers, sublayers)] = [mse_cost]
+
+# pd.DataFrame(d_mse).to_csv(dir_path+f'/results/basic_entangler/val_mse_no_outliers.csv', )
+
+############
+# TESTING ON THE BEST
+# L2S4 is the best with_outliers dataset
+############
+
+best_l, best_s = 0, 0
+best_v = 1
+for k,v in d_mse.items():
+    if v[0] < best_v:
+        best_v = v[0]
+        best_l, best_s = k
+
+print(f'BEST VAL:{best_l}L, {best_s}S', best_v)
+
+
+params_per_sublayer = 3*n_qubits 
+
+layers = best_l
+sublayers = best_s
+
+# re-create the circuit
+qnn_batched = jax.vmap(circuit_random, (0, None,))
+qnn = jax.jit(qnn_batched)
+
+# load optimal parameters
+dir_path = './QuHack4IA_VQNN-track/'
+data = dir_path+f'/results/nonlinear_random_ans_with_outliers/{layers}l-{sublayers}p' 
+opt_params = np.load(data+'/opt_params.npy',)
+
+# predict on validation
+y = jnp.array(y_test)
+yp = qnn(X_test, opt_params) 
+
+mse_cost = jnp.mean((yp - y) ** 2)
+
+print(f'BEST TEST:{best_l}L, {best_s}S', mse_cost)

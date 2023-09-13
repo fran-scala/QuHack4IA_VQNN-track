@@ -166,110 +166,110 @@ X_test = jnp.array(X_test)
 
 print(X_train.shape, X_valid.shape, X_test.shape)
 
-# # Parameter initialization
-# # n_runs = 1
-# epochs = 60
-# batch_size = 30
-# seed = 1234
-# min_layers, max_layers = 1, 4
-# min_sublayers, max_sublayers = 1, 4
+# Parameter initialization
+# n_runs = 1
+epochs = 60
+batch_size = 30
+seed = 1234
+min_layers, max_layers = 1, 4
+min_sublayers, max_sublayers = 1, 4
 
-# for layers in range(min_layers, max_layers + 1):
-#     for sublayers in range(min_sublayers, max_sublayers + 1):
+for layers in range(min_layers, max_layers + 1):
+    for sublayers in range(min_sublayers, max_sublayers + 1):
 
-#         # creating a folder to save data
-#         dir_path = '.'
-#         data = dir_path+f'/results/nonlinear/{layers}l-{sublayers}p'
-#         os.makedirs(data, 0o755, exist_ok=True)
-#         # Jax jit and vmap speed up the computational times of the circuit
+        # creating a folder to save data
+        dir_path = '.'
+        data = dir_path+f'/results/nonlinear/{layers}l-{sublayers}p'
+        os.makedirs(data, 0o755, exist_ok=True)
+        # Jax jit and vmap speed up the computational times of the circuit
 
-#         params_per_sublayer = 3 * n_qubits
-#         qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
-#         qnn = jax.jit(qnn_batched)
+        params_per_sublayer = 3 * n_qubits
+        qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
+        qnn = jax.jit(qnn_batched)
 
-#         # Lists to save data
-#         costs = []
-#         val_costs = []
-#         train_per_epoch = []
-#         val_per_epoch = []
+        # Lists to save data
+        costs = []
+        val_costs = []
+        train_per_epoch = []
+        val_per_epoch = []
 
-#         # Creating the initial random parameters for the QNN
-#         key = jax.random.PRNGKey(seed)
-#         initial_params = jax.random.normal(key, shape=((params_per_sublayer) * layers * sublayers,))
-#         key = jax.random.split(key)[0]
-#         params = jnp.copy(initial_params)
+        # Creating the initial random parameters for the QNN
+        key = jax.random.PRNGKey(seed)
+        initial_params = jax.random.normal(key, shape=((params_per_sublayer) * layers * sublayers,))
+        key = jax.random.split(key)[0]
+        params = jnp.copy(initial_params)
 
-#         # Optimizer initialization
-#         optimizer = optax.adam(learning_rate=0.01)
-#         opt_state = optimizer.init(initial_params)
+        # Optimizer initialization
+        optimizer = optax.adam(learning_rate=0.01)
+        opt_state = optimizer.init(initial_params)
 
-#         for epoch in range(1,epochs+1):
-#             # Generation of random indices to be used for batch
-#             idxs_dataset = jax.random.choice(key, jnp.array(list(range(X_train.shape[0]))), shape=(X_train.shape[0],),
-#                                              replace=False)
-#             key = jax.random.split(key)[0]
-#             cost = 1
-#             val_cost = 1
-#             for i in gen_batches(X_train.shape[0], batch_size):
-#                 idxs = idxs_dataset[i]
+        for epoch in range(1,epochs+1):
+            # Generation of random indices to be used for batch
+            idxs_dataset = jax.random.choice(key, jnp.array(list(range(X_train.shape[0]))), shape=(X_train.shape[0],),
+                                             replace=False)
+            key = jax.random.split(key)[0]
+            cost = 1
+            val_cost = 1
+            for i in gen_batches(X_train.shape[0], batch_size):
+                idxs = idxs_dataset[i]
 
-#                 # Calculate cost function and update parameters accordingly
-#                 params, opt_state, _ = optimizer_update(opt_state, params, X_train[idxs, :], y_train[idxs])
+                # Calculate cost function and update parameters accordingly
+                params, opt_state, _ = optimizer_update(opt_state, params, X_train[idxs, :], y_train[idxs])
 
-#                 # Save MSE Costs and accuracies for both train and validation dataset
-#                 cost = calculate_mse_cost(X_train, y_train, params)  # calculate_mse_cost_and_accuracy
-#                 costs.append(cost)
+                # Save MSE Costs and accuracies for both train and validation dataset
+                cost = calculate_mse_cost(X_train, y_train, params)  # calculate_mse_cost_and_accuracy
+                costs.append(cost)
 
-#                 val_cost = calculate_mse_cost(X_valid, y_valid, params, )  # calculate_mse_cost_and_accuracy
-#                 val_costs.append(val_cost)
-#             train_per_epoch.append(cost)
-#             val_per_epoch.append(val_cost)
+                val_cost = calculate_mse_cost(X_valid, y_valid, params, )  # calculate_mse_cost_and_accuracy
+                val_costs.append(val_cost)
+            train_per_epoch.append(cost)
+            val_per_epoch.append(val_cost)
 
-#             print(f"layers:{layers}, p:{sublayers}, epoch {epoch}/{epochs}", '--- Train cost:', cost, '--- Val cost:',
-#                   val_cost, end='\r')
+            print(f"layers:{layers}, p:{sublayers}, epoch {epoch}/{epochs}", '--- Train cost:', cost, '--- Val cost:',
+                  val_cost, end='\r')
 
-#         np.save(data + '/train_cost.npy', list(costs))
-#         np.save(data + '/val_cost.npy', list(val_costs))
-#         np.save(data + '/train_cost_per_epoch.npy', list(train_per_epoch))
-#         np.save(data + '/val_cost_per_epoch.npy', list(val_per_epoch))
-#         np.save(data + '/opt_params.npy', list(params))
+        np.save(data + '/train_cost.npy', list(costs))
+        np.save(data + '/val_cost.npy', list(val_costs))
+        np.save(data + '/train_cost_per_epoch.npy', list(train_per_epoch))
+        np.save(data + '/val_cost_per_epoch.npy', list(val_per_epoch))
+        np.save(data + '/opt_params.npy', list(params))
 
 ##########
 # PREDICTIONS
 ############
 
 
-# params_per_sublayer = 3*n_qubits 
+params_per_sublayer = 3*n_qubits 
 
-# min_layers, max_layers = 1,4
-# min_sublayers, max_sublayers = 1,4
-# d_mse = {}
-# print('NON-LINEAR')
-# for layers in range(min_layers, max_layers+1):
-#     for sublayers in range(min_sublayers, max_sublayers+1):
-#         # re-create the circuit
-#         qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
-#         qnn = jax.jit(qnn_batched)
+min_layers, max_layers = 1,4
+min_sublayers, max_sublayers = 1,4
+d_mse = {}
+print('NON-LINEAR')
+for layers in range(min_layers, max_layers+1):
+    for sublayers in range(min_sublayers, max_sublayers+1):
+        # re-create the circuit
+        qnn_batched = jax.vmap(circuit_nonlinear, (0, None,))
+        qnn = jax.jit(qnn_batched)
 
-#         # load optimal parameters
-#         dir_path = './QuHack4IA_VQNN-track/'
-#         data = dir_path+f'/results/nonlinear_no_outliers/{layers}l-{sublayers}p' 
-#         opt_params = np.load(data+'/opt_params.npy',)
+        # load optimal parameters
+        dir_path = './QuHack4IA_VQNN-track/'
+        data = dir_path+f'/results/nonlinear_no_outliers/{layers}l-{sublayers}p' 
+        opt_params = np.load(data+'/opt_params.npy',)
 
-#         # predict on validation
-#         y = jnp.array(y_valid)
-#         yp = qnn(X_valid, opt_params) 
-#         mse_cost = jnp.mean((yp - y) ** 2)
+        # predict on validation
+        y = jnp.array(y_valid)
+        yp = qnn(X_valid, opt_params) 
+        mse_cost = jnp.mean((yp - y) ** 2)
         
-#         print(layers, sublayers, mse_cost)
-#         d_mse[f'{layers}-{sublayers}'] = [mse_cost]
+        print(layers, sublayers, mse_cost)
+        d_mse[f'{layers}-{sublayers}'] = [mse_cost]
 
-# pd.DataFrame(d_mse).to_csv(dir_path+f'/results/nonlinear_no_outliers/val_mse_no_outliers.csv', )
+pd.DataFrame(d_mse).to_csv(dir_path+f'/results/nonlinear_no_outliers/val_mse_no_outliers.csv', )
 
-#############
-## TESTING ON THE BEST
-## L2S4 is the best with_outliers dataset
-#############
+############
+# TESTING ON THE BEST
+# L2S4 is the best with_outliers dataset
+############
 
 params_per_sublayer = 3*n_qubits 
 
