@@ -62,7 +62,7 @@ So you can execute the command `python ./demo/demo.py` to run the demo.
 
 To run the training of the model, you can run:
 - `python ./model/VQNN_linear.py`: it executes the model by using the Angle Encoding with the rotation angle computed as 
-  $\pi$$x$
+  $\pi x$
 - `python ./model/VQNN_nonlinear.py`: it executes the model by using the Angle Encoding with the rotation angle computed as
   $2arctan(x)$
 
