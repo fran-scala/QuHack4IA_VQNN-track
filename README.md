@@ -157,5 +157,5 @@ Contains utility code for plotting results.
 |------------------------|--------------------------------------------|
 | **Lorenzo Bergadano**  | [lolloberga](https://github.com/lolloberga) |
 | **Alessandro Danesin** | [ale100gs](https://github.com/ale100gs)    |
-| **Giorgia Mazzaro**    |      |
+| **Giorgia Mazzaro**    | [giorgiamazzaro](https://github.com/giorgiamazzaro)    |
 | **Francesco Scala**    | [fran-scala](https://github.com/fran-scala) |
